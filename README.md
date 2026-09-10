@@ -113,12 +113,14 @@ pnpm kamal:deploy
 pnpm kamal:logs
 ```
 
-`config/deploy.yml` claims `APP_HOST` — `siwe.xyz` — plus three retired names
+`config/deploy.yml` claims `APP_HOST` — `siwe.xyz` — plus four retired names
 the same container answers on only to redirect them: `www.siwe.xyz`,
 `next.siwe.xyz` (the pre-release hostname for this rewrite) and `docs.siwe.xyz`
-(the Docusaurus site this replaces). `docs.siwe.xyz` forwards the path
-unchanged to `siwe.xyz`, where the path rules in `nginx.conf` move the old
-documentation URLs under `/docs/`; the mapping therefore lives in one place.
+(the Docusaurus site this replaces), plus `oidc-demo.siwe.xyz`. The legacy docs
+host maps known pages directly under `/docs/`, while the retired OIDC demo
+lands on the current provider documentation. Each retired hostname still needs
+DNS pointing at `DEPLOY_HOST` (directly or through the CDN); the Kamal host list
+only routes requests after they reach the server.
 
 The contact form and the newsletter signup post to a small companion service —
 plain Node plus PostgreSQL, forwarding contact mail via Resend — that lives in

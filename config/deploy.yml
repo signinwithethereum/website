@@ -16,6 +16,7 @@ proxy:
     - www.siwe.xyz
     - docs.siwe.xyz
     - next.siwe.xyz
+    - oidc-demo.siwe.xyz
   app_port: 80
   healthcheck:
     path: /
