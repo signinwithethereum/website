@@ -502,5 +502,11 @@ export const ECOSYSTEM: Entry[] = [
     type: 'app',
     story: '/blog/success-stories/openrouter',
     note: 'A unified API across hundreds of AI models, used by millions of developers to route inference.'
+  },
+  {
+    name: '1Shot Wallet',
+    link: 'https://1shotapi.com/solutions/1shot-wallet',
+    type: 'tool',
+    note: 'An embedded wallet with native SIWE support for app authentication.'
   }
 ]
