@@ -88,5 +88,6 @@ export const MARKS: Record<string, string> = {
   Opepen: '/integrators/opepen.svg',
   'networked.art': '/integrators/networked-art.svg',
   'evm.now': '/integrators/evm-now.svg',
-  OpenRouter: '/integrators/openrouter.svg'
+  OpenRouter: '/integrators/openrouter.svg',
+  '1Shot Wallet': '/integrators/1shot-wallet.svg'
 }
