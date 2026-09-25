@@ -4,6 +4,22 @@ description: Assemble an ERC-4361 message field by field and watch the wire form
 pageClass: wide
 outline: false
 aside: false
+agentSummary: |
+  ## Using the interactive builder
+
+  Enter the domain, Ethereum address, URI, chain ID, nonce and issued-at timestamp.
+  Statement, expiration time, not-before time, request ID and resources are optional.
+  Version is fixed at `1`. The builder assembles a plain-text ERC-4361 message as
+  fields change, reports field errors or warnings, and lets you copy the output.
+  It runs entirely in the browser; it does not sign the message or start a session.
+
+  On opening the interactive page, the builder generates a fresh nonce, sets
+  Issued At to the current time, and sets Expiration Time ten minutes later.
+  The static example records the server-rendered defaults, before those browser
+  updates. Its field check omits the validator's security and best-practice checks.
+  A well-formed result does not verify a signature, server-issued nonce, allowed
+  domain or URI, or session policy. Use the server-side verification flow in the
+  [quickstart](/docs/quickstart/) for authentication.
 ---
 
 # Message builder
