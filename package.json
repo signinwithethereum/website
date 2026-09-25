@@ -10,6 +10,7 @@
     "build": "vitepress build",
     "preview": "vitepress preview --port 4321",
     "typecheck": "vue-tsc --noEmit",
+    "check:agent-content": "node --experimental-strip-types .vitepress/agent-content.test.ts",
     "og": "pnpm build",
     "kamal:setup": "set -a && . ./.env.production && set +a && kamal setup",
     "kamal:deploy": "set -a && . ./.env.production && set +a && kamal deploy",

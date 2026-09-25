@@ -14,6 +14,7 @@ pnpm dev        # http://localhost:4321
 pnpm build      # → .vitepress/dist
 pnpm preview
 pnpm typecheck
+pnpm check:agent-content # validate the last build's Markdown exports and links
 ```
 
 Node 22.12 or newer. VitePress 2 dropped Node 20 but ships no `engines` field, so
@@ -26,6 +27,8 @@ nothing will warn you.
   config.ts              site config, nav, sidebar
   rss.ts                 feed.rss, generated in buildEnd
   og.ts                  per-page Open Graph images, generated in buildEnd
+  agent-content.ts       llms.txt and clean Markdown, generated in buildEnd
+  agent-components.ts    semantic exports of interactive component content
   theme/
     index.ts             registers every global component
     Layout.vue           default theme + our slots
@@ -48,6 +51,45 @@ api/                     the contact/newsletter service — see api/README.md
 `pnpm build` generates a 1200 × 630 PNG for every Markdown page under the
 build output's `og/` directory and writes matching Open Graph and Twitter
 metadata into every rendered page. `pnpm og` is a convenient alias for that build.
+
+## Agent-readable content
+
+Every build also writes `/llms.txt`, a concise index prioritizing the quickstart,
+security guidance and libraries, and a Markdown counterpart of every content
+page. For example, `/` has `/index.md`, `/docs/quickstart/` has
+`/docs/quickstart/index.md`, and `/docs/message` has `/docs/message.md`.
+Each HTML page advertises its counterpart with `rel="alternate"` and
+`type="text/markdown"`, and the index with `rel="describedby"`.
+
+The exporter converts only the rendered article content, keeping Vue-backed
+pages synchronized with the website. It restores fenced examples from the source
+Markdown so syntax highlighting cannot change their whitespace. Page links point
+to the Markdown counterparts, downloads keep their original URLs, and explicit
+heading anchors preserve API reference links. `APP_HOST` controls the generated
+origin, as it does for the site's page metadata.
+
+Component adapters in `.vitepress/agent-components.ts` omit UI controls and
+decorations and expand content hidden behind interaction: all libraries, brand
+states and ecosystem entries. Shared data modules drive both Vue and the export.
+When adding a component whose initial HTML does not contain its full meaning,
+extend its adapter and the output checks. Tools and contact pages can also use
+`agentSummary: |` frontmatter for a nonvisual Markdown explanation of their
+inputs, outputs and limitations. This is rendered and linked by the exporter.
+
+`pnpm check:agent-content` checks the build's page inventory, discovery metadata,
+code examples, local links and anchors, and representative component content.
+Run it after `pnpm build`, with the same `APP_HOST` if overridden. The existing
+site builds pages marked `draft: true` but omits them from blog listings; their
+Markdown counterparts exist too, while `/llms.txt` omits them. The generated 404
+page has no Markdown alternate.
+
+For a local nginx serving the build with this repository's configuration, add
+`AGENT_CONTENT_BASE_URL=http://127.0.0.1:PORT` to the check command to test HTTP
+responses, compression, content types and legacy redirects too.
+
+Production nginx serves `.md` as `text/markdown; charset=utf-8` and `/llms.txt`
+as `text/plain; charset=utf-8`, with a `describedby` Link header on Markdown
+responses. Missing Markdown URLs remain 404s. No generated exports are committed.
 
 ## Two things that are copied on purpose
 
