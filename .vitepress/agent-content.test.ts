@@ -306,8 +306,14 @@ if (process.env.AGENT_CONTENT_BASE_URL) {
     ['/security-considerations', 'siwe.xyz', '/docs/security-considerations'],
     ['/validator/anything.md', 'siwe.xyz', '/tools/validator'],
     ['/media-kit', 'siwe.xyz', '/brand'],
+    ['/docs/quickstart/retrieve-onchain-data/', 'siwe.xyz', '/docs/quickstart/'],
+    ['/docs/quickstart/frontend/', 'siwe.xyz', '/docs/quickstart/frontend'],
     ['/', 'docs.siwe.xyz', 'https://siwe.xyz/docs/'],
-    ['/quickstart/frontend.md', 'docs.siwe.xyz', 'https://siwe.xyz/quickstart/frontend.md'],
+    ['/quickstart/frontend.md', 'docs.siwe.xyz', 'https://siwe.xyz/docs/quickstart/frontend.md'],
+    ['/quickstart/frontend/', 'docs.siwe.xyz', 'https://siwe.xyz/docs/quickstart/frontend'],
+    ['/quickstart/retrieve-onchain-data/', 'docs.siwe.xyz', 'https://siwe.xyz/docs/quickstart/'],
+    ['/integrations/auth0/', 'docs.siwe.xyz', 'https://siwe.xyz/docs/integrations/'],
+    ['/', 'oidc-demo.siwe.xyz', 'https://siwe.xyz/docs/oidc-provider/'],
     ['/docs/message.md', 'next.siwe.xyz', 'https://siwe.xyz/docs/message.md'],
     ['/docs/message.md', 'www.siwe.xyz', 'https://siwe.xyz/docs/message.md']
   ]) {
