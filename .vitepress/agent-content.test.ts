@@ -158,15 +158,17 @@ const anchorCache = new Map<string, Set<string>>()
 async function hasAnchor(filename: string, anchor: string): Promise<boolean> {
   if (!anchorCache.has(filename)) {
     const body = await readFile(filename, 'utf8')
+    const tokens = filename.endsWith('.md') ? flatten(markdown.parse(body, {})) : []
     const fragments = filename.endsWith('.md')
-      ? flatten(markdown.parse(body, {}))
+      ? tokens
         .filter((token) => ['html_inline', 'html_block'].includes(token.type))
         .map((token) => token.content).join('\n')
       : body
     const document = load(fragments)
-    anchorCache.set(filename, new Set(document('[id], a[name]').toArray().flatMap((element) =>
-      [document(element).attr('id'), document(element).attr('name')]
-        .filter((value): value is string => value !== undefined))))
+    const explicit = document('[id], a[name]').toArray().flatMap((element) =>
+      [document(element).attr('id'), document(element).attr('name')])
+    const headings = tokens.filter((token) => token.type === 'heading_open').map((token) => token.attrGet('id'))
+    anchorCache.set(filename, new Set([...explicit, ...headings].filter((value): value is string => !!value)))
   }
   return anchorCache.get(filename)!.has(anchor)
 }

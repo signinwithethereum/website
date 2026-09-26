@@ -26,7 +26,6 @@
     "cheerio": "^1.2.0",
     "geist": "^1.7.2",
     "turndown": "^7.2.4",
-    "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^5.9.3",
     "vitepress": "2.0.0-alpha.19",
     "vue": "^3.5.40",
