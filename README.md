@@ -28,7 +28,7 @@ nothing will warn you.
   rss.ts                 feed.rss, generated in buildEnd
   og.ts                  per-page Open Graph images, generated in buildEnd
   agent-content.ts       llms.txt and clean Markdown, generated in buildEnd
-  agent-components.ts    semantic exports of interactive component content
+  agent-components.ts    Markdown replacements for Vue content sections
   theme/
     index.ts             registers every global component
     Layout.vue           default theme + our slots
@@ -61,20 +61,17 @@ page. For example, `/` has `/index.md`, `/docs/quickstart/` has
 Each HTML page advertises its counterpart with `rel="alternate"` and
 `type="text/markdown"`, and the index with `rel="describedby"`.
 
-The exporter converts only the rendered article content, keeping Vue-backed
-pages synchronized with the website. It restores fenced examples from the source
-Markdown so syntax highlighting cannot change their whitespace. Page links point
-to the Markdown counterparts, downloads keep their original URLs, and explicit
-heading anchors preserve API reference links. `APP_HOST` controls the generated
-origin, as it does for the site's page metadata.
+The exporter keeps the source Markdown, removes frontmatter, translates
+VitePress callouts and preserves explicit heading anchors. Code examples and tables stay
+in their original Markdown. Page links point to the Markdown counterparts and
+downloads keep their original URLs. `APP_HOST` controls the generated origin.
 
-Component adapters in `.vitepress/agent-components.ts` omit UI controls and
-decorations and expand content hidden behind interaction: all libraries, brand
-states and ecosystem entries. Shared data modules drive both Vue and the export.
-When adding a component whose initial HTML does not contain its full meaning,
-extend its adapter and the output checks. Tools and contact pages can also use
+Vue tags are replaced by `.vitepress/agent-components.ts`, using rendered prose
+and shared data for libraries, brand states and ecosystem entries. Only these
+component sections use HTML conversion; UI controls and decoration are omitted.
+Add a replacement when introducing a new content component. Tools and contact pages can also use
 `agentSummary: |` frontmatter for a nonvisual Markdown explanation of their
-inputs, outputs and limitations. This is rendered and linked by the exporter.
+inputs, outputs and limitations. This is included and linked by the exporter.
 
 `pnpm check:agent-content` checks the build's page inventory, discovery metadata,
 code examples, local links and anchors, and representative component content.
