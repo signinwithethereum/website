@@ -1,9 +1,10 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig, type HeadConfig } from 'vitepress'
 
 /* The extension is required: Vite 8's native config loader warns on
  * extensionless relative imports and will stop resolving them. */
 import { generateFeed } from './rss.ts'
 import { generateOgImages, ogImageForRoute, routeForPage } from './og.ts'
+import { generateAgentContent, markdownForPage } from './agent-content.ts'
 
 const HOST = `https://${process.env.APP_HOST ?? 'siwe.xyz'}`
 const DESCRIPTION =
@@ -32,6 +33,7 @@ export default defineConfig({
     ['meta', { property: 'og:site_name', content: 'Sign in with Ethereum' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@signinethereum' }],
+    ['link', { rel: 'describedby', type: 'text/plain', href: `${HOST}/llms.txt` }],
     [
       'link',
       {
@@ -48,6 +50,7 @@ export default defineConfig({
   async buildEnd(config) {
     await generateFeed(config)
     await generateOgImages(config)
+    await generateAgentContent(config, HOST)
   },
 
   transformHead({ page, title, description }) {
@@ -58,6 +61,9 @@ export default defineConfig({
 
     return [
       ['link', { rel: 'canonical', href: url }],
+      ...(page === '404.html' ? [] : [
+        ['link', { rel: 'alternate', type: 'text/markdown', href: `${HOST}${markdownForPage(page)}` }] as HeadConfig
+      ]),
       ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: description }],
       ['meta', { property: 'og:url', content: url }],

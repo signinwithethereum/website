@@ -4,6 +4,15 @@ description: Ask the SIWE maintainers for integration help, report a mistake, sh
 pageClass: overview-rail
 outline: false
 aside: false
+agentSummary: |
+  ## Sending a message
+
+  Use the contact form on the website with your name, email address and message;
+  company is optional. A successful submission displays “Message sent” and sends
+  the message to the maintainers. Replies arrive by email at the address supplied.
+  A failed submission displays an error and offers
+  [contact@siwe.xyz](mailto:contact@siwe.xyz) as an alternative.
+  This Markdown page describes the form; it cannot submit a message.
 ---
 
 # Get in touch

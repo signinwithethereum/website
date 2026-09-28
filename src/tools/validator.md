@@ -4,6 +4,23 @@ description: Paste an ERC-4361 message and see everything wrong with it, from fo
 pageClass: wide
 outline: false
 aside: false
+agentSummary: |
+  ## Using the interactive validator
+
+  Input is a plain-text ERC-4361 message, processed entirely in your browser.
+  Strict mode is enabled by default;
+  turning it off keeps the format and compliance checks. You can load a good
+  or broken sample, edit the message, or clear it. Output includes parsed fields
+  and errors, warnings and suggestions with line and column locations, field
+  names, issue types and codes. Where an issue supports an automatic fix, the
+  tool can update the input; review the changed bytes before signing.
+
+  This is a message linter. It does not verify a cryptographic signature,
+  establish control of an account, check a server's stored nonce or allowed
+  origin, or create a session. A passing result is not proof of authentication.
+  Production verification must also follow the
+  [quickstart](/docs/quickstart/) and
+  [security guidance](/docs/security-considerations).
 ---
 
 # Message validator
